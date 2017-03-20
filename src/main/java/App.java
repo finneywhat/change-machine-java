@@ -9,6 +9,9 @@ import static spark.Spark.*;
 public class App {
   public static void main(String[] args) {
     String layout = "templates/layout.vtl";
+    //create new ChangeMachine so we can call its method
+    //originally in /coin-combo, but can be put here, maybe to be accessible everywhere?
+    ChangeMachine master = new ChangeMachine();
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -21,9 +24,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       // Parse the input from the form and create new Float named moneyInput
       Float moneyInput = Float.parseFloat(request.queryParams("valueInput"));
-      //create new ChangeMachine so we can call its method
-      ChangeMachine master = new ChangeMachine();
-      // call its method
+      // call ChangeMachine method
       String moneyOutput = master.makeChange(moneyInput);
       // use the HashMap to attach moneyOutput to the key/name of form valueInput
       model.put("valueInput", moneyOutput);
